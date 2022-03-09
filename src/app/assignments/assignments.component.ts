@@ -8,8 +8,6 @@ import { Assignment } from './assignment.model';
   styleUrls: ['./assignments.component.scss'],
 })
 export class AssignmentsComponent implements OnInit {
-  boutonInactif = true;
-  assignmentSelectionne?: Assignment;
 
   assignments:Assignment[] = [];
 
@@ -27,11 +25,6 @@ export class AssignmentsComponent implements OnInit {
     });
 
     console.log("Après l'appel au service");
-  }
-
-
-  assignmentClique(assignment:Assignment) {
-    this.assignmentSelectionne = assignment;
   }
 
   onDeleteAssignment(event:Assignment) {

@@ -1,25 +1,27 @@
-
 <main class="container">
   <a routerLink="/add" class="ajouterBtn">
     <button mat-flat-button color="accent">
         Ajouter Assignment
     </button>
   </a>
-  
+
 
   <h2>Liste des devoirs :</h2>
   <mat-list *ngFor="let assignment of assignments">
-    <h3 mat-subheader>{{assignment.dateDeRendu | date:"dd/MM/yy"}}</h3>
-    <mat-list-item (click)="assignmentClique(assignment)">
-      <p *ngIf="assignment.rendu; else nonsoumis" appRendu>
-        Devoir intitulé {{assignment.nom}}.
-      </p>
-      <ng-template #nonsoumis>
-        <p appNonRendu>Le devoir {{assignment.nom}} n'a pas encore été rendu.</p>
-      </ng-template>
-      <mat-divider></mat-divider>
-    </mat-list-item>
-  </mat-list>
+    <nav>
+      <a href="/assignment/{{assignment.id}}">
+        <h3 mat-subheader>{{assignment.dateDeRendu | date:"dd/MM/yy"}}</h3>
+        <mat-list-item>
+          <p *ngIf="assignment.rendu; else nonsoumis" appRendu>
+            Devoir intitulé {{assignment.nom}}.
+          </p>
+          <ng-template #nonsoumis>
+            <p appNonRendu>Le devoir {{assignment.nom}} n'a pas encore été rendu.</p>
+          </ng-template>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </a>
+    </nav>
 
-  <app-assignment-detail [assignmentTransmis]="assignmentSelectionne"></app-assignment-detail>
+  </mat-list>
 </main>
