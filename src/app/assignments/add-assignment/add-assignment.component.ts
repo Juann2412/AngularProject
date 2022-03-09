@@ -18,19 +18,20 @@ export class AddAssignmentComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
+    if((!this.nomAssignment) || (!this.dateDeRendu)) return;
     console.log(
       'nom = ' + this.nomAssignment + ' date de rendu = ' + this.dateDeRendu
     );
 
     let newAssignment = new Assignment();
-    newAssignment.id = Math.round(Math.random()*1000000);
+    newAssignment.id = Math.round(Math.random()*10000000);
     newAssignment.nom = this.nomAssignment;
     newAssignment.dateDeRendu = this.dateDeRendu;
     newAssignment.rendu = false;
 
     this.assignmentsService.addAssignment(newAssignment)
-    .subscribe(message => {
-      console.log(message);
+    .subscribe(reponse => {
+      console.log(reponse.message);
 
       // il va falloir naviguer (demander au router) d'afficher à nouveau la liste
       // en gros, demander de naviguer vers /home

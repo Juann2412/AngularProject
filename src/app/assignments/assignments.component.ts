@@ -26,11 +26,5 @@ export class AssignmentsComponent implements OnInit {
 
     console.log("Après l'appel au service");
   }
-
-  onDeleteAssignment(event:Assignment) {
-    this.assignmentsService.deleteAssignment(event)
-    .subscribe(message => {
-      console.log(message);
-    })
-  }
+  
 }
