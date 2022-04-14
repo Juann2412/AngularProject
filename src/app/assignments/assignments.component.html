@@ -1,14 +1,14 @@
 <main class="container">
+  <!--
   <a routerLink="/add" class="ajouterBtn">
     <button mat-flat-button color="accent">
         Ajouter Assignment
     </button>
   </a>
-
-
+-->
   <h2>Liste des devoirs :</h2>
   <mat-list *ngFor="let assignment of assignments">
-    <nav>
+    <!--<nav>
       <a href="/assignment/{{assignment.id}}">
         <h3 mat-subheader>{{assignment.dateDeRendu | date:"dd/MM/yy"}}</h3>
         <mat-list-item>
@@ -22,6 +22,22 @@
         </mat-list-item>
       </a>
     </nav>
+  -->
+
+
+  <mat-card class="my-card" (click) = "details(assignment)">
+    <mat-card-header>
+      <mat-card-title style="margin-top: 10px;">{{assignment.nom}}</mat-card-title>
+      <img mat-card-avatar src="{{assignment.matieres.photoProf}}" alt="Shiba Inu">
+    </mat-card-header>
+
+    <mat-card-content style="margin-top: 20px;">
+      <h4>Devoir de {{assignment.eleve}}</h4>
+      <h4>A rendre le {{assignment.dateDeRendu | date:"dd/MM/yy"}}</h4>
+    </mat-card-content>
+  </mat-card>
 
   </mat-list>
+
+
 </main>

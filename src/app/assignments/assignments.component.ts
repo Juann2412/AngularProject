@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AssignmentsService } from '../shared/assignments.service';
 import { Assignment } from './assignment.model';
 
@@ -12,7 +13,7 @@ export class AssignmentsComponent implements OnInit {
   assignments:Assignment[] = [];
 
 
-  constructor(private assignmentsService:AssignmentsService) {}
+  constructor(private assignmentsService:AssignmentsService,private router: Router) {}
 
   // appelé après le constructeur et AVANT l'affichage du composant
   ngOnInit(): void {
@@ -22,9 +23,14 @@ export class AssignmentsComponent implements OnInit {
     .subscribe(assignments => {
       console.log("données arrivées");
       this.assignments = assignments;
+      console.log(this.assignments)
     });
 
     console.log("Après l'appel au service");
   }
-  
+
+  details(assignment : Assignment){
+    this.router.navigate(['/assignment/'+assignment.id]);
+  }
+
 }
