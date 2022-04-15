@@ -16,7 +16,21 @@
 .ajouterBtn {
   align-self: flex-end;
 }
-.mycard{
-  margin-top: 50px;
+
+table {
+  width: 100%;
 }
 
+.mat-column-id {
+  color:red;
+}
+
+.example-viewport {
+  height: 400px;
+  width: 100%;
+  border: 1px solid black;
+}
+
+.example-item {
+  height: 150px;
+}

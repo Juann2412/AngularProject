@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Assignment } from '../assignments/assignment.model';
 import { LoggingService } from './logging.service';
+import {data} from './data';
 
 @Injectable({
   providedIn: 'root'
@@ -19,14 +20,15 @@ export class AssignmentsService {
 
   url = "http://localhost:8010/api/assignments";
 
-  getAssignments(): Observable<Assignment[]> {
+  getAssignments(page:number, limit:number): Observable<any> {
     // en réalité, bientôt au lieu de renvoyer un tableau codé en dur,
     // on va envoyer une requête à un Web Service sur le cloud, qui mettra un
     // certain temps à répondre. On va donc préparer le terrain en renvoyant
     // non pas directement les données, mais en renvoyant un objet "Observable"
     //return of(this.assignments);
-    return this.http.get<Assignment[]>(this.url);
+    return this.http.get<Assignment[]>(this.url+ "?page=" + page + "&limit=" + limit);
   }
+
 
   getAssignment(id: number): Observable<Assignment | undefined> {
     //let a = this.assignments.find(a => a.id === id);
@@ -59,4 +61,21 @@ export class AssignmentsService {
     //return of("Assignment supprimé");
     return this.http.delete(this.url + "/" + assignment._id);
   }
+
+  peuplerBD(){
+    data.forEach(element => {
+      let newAssignment = new Assignment();
+      newAssignment.id = +element.id;
+      newAssignment.eleve = element.eleve;
+      newAssignment.matiere = +element.matiere;
+      newAssignment.dateDeRendu = new Date(element.dateDeRendu);
+      newAssignment.nom = element.nom;
+      newAssignment.rendu = element.rendu;
+      newAssignment.remarque = element.remarque;
+      this.addAssignment(newAssignment).subscribe(reponse => {
+        console.log(reponse.message)
+      })
+    });
+  }
+
 }

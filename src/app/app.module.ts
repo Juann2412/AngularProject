@@ -18,6 +18,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatStepperModule} from '@angular/material/stepper';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 
 import { AssignmentsComponent } from './assignments/assignments.component';
@@ -67,7 +68,7 @@ const routes:Routes = [
   ],
   imports: [
     BrowserModule, FormsModule,MatTabsModule,MatToolbarModule,MatTooltipModule,
-    MatStepperModule,ReactiveFormsModule,
+    MatStepperModule,ReactiveFormsModule,ScrollingModule,
     BrowserAnimationsModule, MatButtonModule, MatIconModule, MatDividerModule,
     MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule,
     MatListModule, MatCardModule, MatCheckboxModule,MatSlideToggleModule,
