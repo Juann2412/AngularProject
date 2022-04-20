@@ -1,8 +1,46 @@
-<mat-card *ngIf="assignmentTransmis">
+<form ngForm #assignmentdetailForm (submit)="onSubmit(); assignmentdetailForm.reset()" class="example-form">
+
+  <mat-card *ngIf="assignmentTransmis">
+    <mat-label>Nom :</mat-label>
     <mat-card-title>{{assignmentTransmis.nom}}</mat-card-title>
+
+    <mat-label>Date de Rendu :</mat-label>
     <mat-card-subtitle>{{assignmentTransmis.dateDeRendu | date:"dd/MM/yy"}}</mat-card-subtitle>
+
+    <mat-label>Nom de l'eleve :</mat-label>
+    <mat-card-subtitle>{{assignmentTransmis.eleve}}</mat-card-subtitle>
+
+    <mat-label *ngIf="assignmentTransmis.rendu">Note :</mat-label>
+    <mat-card-subtitle *ngIf="assignmentTransmis.rendu">{{assignmentTransmis.note}}</mat-card-subtitle>
+
+    <mat-label *ngIf="assignmentTransmis.rendu">Remarques :</mat-label>
+    <mat-card-subtitle *ngIf="assignmentTransmis.rendu">{{assignmentTransmis.remarque}}</mat-card-subtitle>
+
+
+    <mat-form-field *ngIf="!assignmentTransmis.rendu">
+      <input matInput [min]="1" [max]="20" placeholder="Note" type="number" min="1" max="20" [(ngModel)]="noteAssignment" name="note" required>
+    </mat-form-field>
+
+
+
+    <mat-form-field style="width: 600px;" class="example-full-width" *ngIf="!assignmentTransmis.rendu">
+      <mat-label>Remarques</mat-label>
+      <textarea matInput placeholder="..." type="text" [(ngModel)]="remarqueAssignment" name="remarque" ></textarea>
+    </mat-form-field>
+
     <div id="bottom">
+      <button mat-stroked-button color="primary" [disabled]="(!this.noteAssignment)">
+            Add Note
+          </button>
+      <!--
       <mat-checkbox *ngIf="!assignmentTransmis.rendu" (click)="onAssignmentRendu()">Rendu</mat-checkbox>
+      -->
       <button mat-raised-button color="warn" (click)="onDelete()">DELETE</button>
     </div>
+    <!--
+    <div *ngIf="note.errors?.['']">
+      Name must be at least 4 characters long.
+    </div>
+  -->
   </mat-card>
+</form>

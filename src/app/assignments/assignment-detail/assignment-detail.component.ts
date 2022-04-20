@@ -11,6 +11,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class AssignmentDetailComponent implements OnInit {
   assignmentTransmis?:Assignment;
   @Output() deleteAssignment = new EventEmitter<Assignment>();
+  noteAssignment!: number;
+  remarqueAssignment?: string;
 
   constructor(private assignmentsService:AssignmentsService,
     private route:ActivatedRoute, private router:Router) { }
@@ -64,5 +66,27 @@ export class AssignmentDetailComponent implements OnInit {
       },
       fragment: 'edition',
     });
+  }
+
+  onSubmit() {
+    if((!this.noteAssignment)) return;
+    console.log(
+      'note = ' + this.noteAssignment + ' remarque = ' + this.remarqueAssignment + ''
+    );
+    if (this.assignmentTransmis) {
+      this.assignmentTransmis.rendu = true;
+      this.assignmentTransmis.note = this.noteAssignment;
+      if(this.remarqueAssignment)
+      this.assignmentTransmis.remarque = this.remarqueAssignment;
+
+      
+      this.assignmentsService
+        .updateAssignment(this.assignmentTransmis)
+        .subscribe((reponse) => {
+          console.log(reponse.message);
+          // et on navigue vers la page d'accueil pour afficher la liste
+          this.router.navigate(['/home']);
+        });
+    }
   }
 }
