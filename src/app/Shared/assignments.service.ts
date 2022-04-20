@@ -26,7 +26,15 @@ export class AssignmentsService {
     // certain temps à répondre. On va donc préparer le terrain en renvoyant
     // non pas directement les données, mais en renvoyant un objet "Observable"
     //return of(this.assignments);
-    return this.http.get<Assignment[]>(this.url+ "?page=" + page + "&limit=" + limit);
+    return this.http.get<Assignment[]>(this.url+ "?page=" + page + "&limit=" + limit+"&rendu=true");
+  }
+  getAssignmentsNonRendu(page:number, limit:number): Observable<any> {
+    // en réalité, bientôt au lieu de renvoyer un tableau codé en dur,
+    // on va envoyer une requête à un Web Service sur le cloud, qui mettra un
+    // certain temps à répondre. On va donc préparer le terrain en renvoyant
+    // non pas directement les données, mais en renvoyant un objet "Observable"
+    //return of(this.assignments);
+    return this.http.get<Assignment[]>(this.url+ "?page=" + page + "&limit=" + limit+"&rendu=false");
   }
 
 

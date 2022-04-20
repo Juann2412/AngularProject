@@ -26,9 +26,19 @@ export class AssignmentsComponent implements OnInit {
   prevPage= 1;
   nextPage= 2;
 
+  pageNonRendu=1;
+  limitNonRendu=10;
+  totalPagesNonRendu=0;
+  pagingCounterNonRendu=0;
+  hasPrevPageNonRendu=false;
+  hasNextPageNonRendu=true;
+  prevPageNonRendu= 1;
+  nextPageNonRendu= 2;
 
-  constructor(private assignmentsService:AssignmentsService,private router: Router, private ngZone: NgZone) {}
+
+  constructor(private assignmentsService:AssignmentsService,private router: Router, private ngZone2: NgZone, private ngZone: NgZone) {}
   @ViewChild('scroller') scroller!: CdkVirtualScrollViewport;
+  @ViewChild('scrollerNonRendu') scrollerNonRendu!: CdkVirtualScrollViewport;
   ngAfterViewInit():void{
     this.scroller.elementScrolled().pipe(
       tap(event => {
@@ -49,7 +59,7 @@ export class AssignmentsComponent implements OnInit {
       }),
       filter(([y1, y2]) => (y2 < y1 && y2 < 140)),
       tap(val => {
-        //console.log(val)
+        //console.log("val")
       }),
       throttleTime(200),
       tap(val => {
@@ -63,6 +73,42 @@ export class AssignmentsComponent implements OnInit {
       this.ngZone.run(() => {
         this.page = this.nextPage;
         this.getAssignmentsScrollInfini();
+      })
+    })
+
+    this.scrollerNonRendu.elementScrolled().pipe(
+      tap(event => {
+        //console.log(event);
+      }),
+      map(event => {
+        return this.scrollerNonRendu.measureScrollOffset('bottom');
+      }),
+      tap(val => {
+        //console.log("distance par rapport à la fin = " + val)
+      }),
+      pairwise(),
+      tap(val => {
+        /*
+        if(val[0] < val[1]) console.log("on monte")
+        else console.log("on descend")
+        */
+      }),
+      filter(([y1, y2]) => (y2 < y1 && y2 < 140)),
+      tap(val => {
+       // console.log(val)
+      }),
+      throttleTime(200),
+      tap(val => {
+        //console.log(val);
+      })
+    ).subscribe(() => {
+      // ici traitement final
+      console.log("On va chercher de nouveaux assignments !")
+
+      // on le fait en tache de fond...
+      this.ngZone2.run(() => {
+        this.pageNonRendu = this.nextPageNonRendu;
+        this.getAssignmentsNonRenduScrollInfini();
       })
     })
   }
@@ -98,17 +144,36 @@ export class AssignmentsComponent implements OnInit {
         this.prevPage= reponse.prevPage;
         this.nextPage= reponse.nextPage;
     });
+
+    this.assignmentsService.getAssignmentsNonRendu(this.page, this.limit)
+    .subscribe(reponse => {
+      console.log("données arrivées");
+      /*this.assignments = assignments;
+      console.log(this.assignments)
+      this.assignmentsRendu = this.assignments.filter(x => x.rendu === true);
+      this.assignmentsNonRendu = this.assignments.filter(x => x.rendu === false);
+      console.log(this.assignmentsNonRendu.length);*/
+      console.log(reponse)
+      this.assignmentsNonRendu = reponse.docs;
+        this.pageNonRendu = reponse.page;
+        this.limitNonRendu=reponse.limit;
+        this.totalPagesNonRendu=reponse.totalPages;
+        this.pagingCounterNonRendu=reponse.pagingCounter;
+        this.hasPrevPageNonRendu=reponse.hasPrevPage;
+        this.hasNextPageNonRendu=reponse.hasNextPage;
+        this.prevPageNonRendu= reponse.prevPage;
+        this.nextPageNonRendu= reponse.nextPage;
+    });
   }
 
   getAssignmentsScrollInfini() {
     // demander les données au service de gestion des assignments...
     this.assignmentsService.getAssignments(this.page, this.limit)
     .subscribe(reponse => {
-      console.log("données arrivées");
+      console.log("données arrivées rendu");
       //this.assignments = reponse.docs;
       // au lieu de remplacer les assignments chargés par les nouveaux, on les ajoute
       this.assignments = this.assignments.concat(reponse.docs);
-
       this.page = reponse.page;
       this.limit=reponse.limit;
       this.totalPages=reponse.totalPages;
@@ -117,10 +182,31 @@ export class AssignmentsComponent implements OnInit {
       this.hasNextPage=reponse.hasNextPage;
       this.prevPage= reponse.prevPage;
       this.nextPage= reponse.nextPage;
+
     });
 
     console.log("Après l'appel au service");
-}
+  }
+
+  getAssignmentsNonRenduScrollInfini(){
+    this.assignmentsService.getAssignmentsNonRendu(this.pageNonRendu, this.limitNonRendu)
+    .subscribe(reponse => {
+      console.log("données arrivées non rendu");
+      //this.assignments = reponse.docs;
+      // au lieu de remplacer les assignments chargés par les nouveaux, on les ajoute
+      this.assignmentsNonRendu = this.assignmentsNonRendu.concat(reponse.docs);
+
+      this.pageNonRendu = reponse.page;
+      this.limitNonRendu=reponse.limit;
+      this.totalPagesNonRendu=reponse.totalPages;
+      this.pagingCounterNonRendu=reponse.pagingCounter;
+      this.hasPrevPageNonRendu=reponse.hasPrevPage;
+      this.hasNextPageNonRendu=reponse.hasNextPage;
+      this.prevPageNonRendu= reponse.prevPage;
+      this.nextPageNonRendu= reponse.nextPage;
+    });
+    console.log("Après l'appel au service non rendu");
+  }
 
   pagePrecedente() {
     this.page--;
