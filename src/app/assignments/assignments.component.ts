@@ -72,7 +72,9 @@ export class AssignmentsComponent implements OnInit {
       // on le fait en tache de fond...
       this.ngZone.run(() => {
         this.page = this.nextPage;
-        this.getAssignmentsScrollInfini();
+        if(this.hasNextPage === true){
+          this.getAssignmentsScrollInfini();
+        }
       })
     })
 
@@ -100,6 +102,7 @@ export class AssignmentsComponent implements OnInit {
       throttleTime(200),
       tap(val => {
         //console.log(val);
+       // console.log("next page:"+ this.hasNextPage)
       })
     ).subscribe(() => {
       // ici traitement final
@@ -108,7 +111,11 @@ export class AssignmentsComponent implements OnInit {
       // on le fait en tache de fond...
       this.ngZone2.run(() => {
         this.pageNonRendu = this.nextPageNonRendu;
-        this.getAssignmentsNonRenduScrollInfini();
+
+        if(this.hasNextPageNonRendu === true){
+          this.getAssignmentsNonRenduScrollInfini();
+        }
+
       })
     })
   }
