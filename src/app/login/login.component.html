@@ -1,0 +1,22 @@
+
+<div>
+  <mat-card class="card_login">
+    <mat-card-title class="title">
+      Login
+    </mat-card-title>
+    <mat-card-content>
+      <form ngForm #loginForm (submit)="onSubmit(); loginForm.reset()" class="form">
+        <mat-form-field>
+          <input matInput placeholder="email" [(ngModel)]="email"  name="email" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="password" type="password" [(ngModel)]="password"  name="password" required>
+        </mat-form-field>
+        <button mat-flat-button color="primary">
+          Connexion
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  </div>
+

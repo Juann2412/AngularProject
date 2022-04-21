@@ -20,8 +20,15 @@ export class AssignmentDetailComponent implements OnInit {
   ngOnInit(): void {
     // on va récupérer l'id dans l'URL,
     // le + permet de forcer en number (au lieu de string)
-    const id = +this.route.snapshot.params['id'];
-    this.getAssignment(id);
+    let token = localStorage.getItem('user')
+    if (token === null) {
+      this.router.navigate(['/login']);
+    }
+    else{
+      const id = +this.route.snapshot.params['id'];
+      this.getAssignment(id);
+    }
+
   }
 
   getAssignment(id: number) {
@@ -79,7 +86,7 @@ export class AssignmentDetailComponent implements OnInit {
       if(this.remarqueAssignment)
         this.assignmentTransmis.remarque = this.remarqueAssignment;
 
-      
+
       this.assignmentsService
         .updateAssignment(this.assignmentTransmis)
         .subscribe((reponse) => {

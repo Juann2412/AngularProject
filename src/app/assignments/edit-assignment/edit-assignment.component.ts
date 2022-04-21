@@ -26,8 +26,14 @@ export class EditAssignmentComponent implements OnInit {
     console.log(queryParams);
     console.log("Fragment :")
     console.log(this.route.snapshot.fragment);
+    let token = localStorage.getItem('user')
+    if (token === null) {
+      this.router.navigate(['/login']);
+    }
+    else{
+      this.getAssignment();
+    }
 
-    this.getAssignment();
   }
 
   getAssignment() {

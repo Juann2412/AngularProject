@@ -7,7 +7,7 @@
   </a>
 -->
   <h2>Liste des devoirs :</h2>
- <!-- <mat-list *ngFor="let assignment of assignments">-->
+<!-- <mat-list *ngFor="let assignment of assignments">-->
     <!--<nav>
       <a href="/assignment/{{assignment.id}}">
         <h3 mat-subheader>{{assignment.dateDeRendu | date:"dd/MM/yy"}}</h3>
@@ -39,7 +39,7 @@
 
   </mat-list>
 -->
-  <!--
+<!--
   <mat-tab-group animationDuration="2000ms">
     <mat-tab label="Assignment Rendu">
       <mat-list *ngFor="let assignmentR of assignmentsRendu">
@@ -81,7 +81,6 @@
 
     <button mat-flat-button color="primary" [disabled]="!hasPrevPage" (click)="premierePage()">Première page</button>
     &nbsp;
-
     <button mat-flat-button color="primary"
             (click)="pagePrecedente()"
             [disabled]="!hasPrevPage"
@@ -126,7 +125,5 @@
       </cdk-virtual-scroll-viewport>
     </mat-tab>
    </mat-tab-group>
-
-
 
 </main>

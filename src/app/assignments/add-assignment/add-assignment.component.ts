@@ -23,16 +23,23 @@ export class AddAssignmentComponent implements OnInit {
     private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.getMatiere();
+    let token = localStorage.getItem('user')
+    if (token === null) {
+      this.router.navigate(['/login']);
+    }
+    else{
+      this.getMatiere();
+    }
+
   }
 
   getMatiere() {
 
     this.matiereService.getMatiere().subscribe((matiere) => {
       if (!matiere) return;
-
       this.matiere = matiere;
       this.selectedMatiere = matiere[0];
+      console.log(this.selectedMatiere)
     });
   }
 
