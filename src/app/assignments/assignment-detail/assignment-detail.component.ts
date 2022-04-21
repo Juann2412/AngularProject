@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AssignmentsService } from 'src/app/shared/assignments.service';
 import { Assignment } from '../assignment.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/shared/auth.service';
+import { User } from 'src/app/login/user.model';
 
 @Component({
   selector: 'app-assignment-detail',
@@ -15,7 +17,7 @@ export class AssignmentDetailComponent implements OnInit {
   remarqueAssignment?: string;
 
   constructor(private assignmentsService:AssignmentsService,
-    private route:ActivatedRoute, private router:Router) { }
+    private route:ActivatedRoute, private router:Router , private authService : AuthService) { }
 
   ngOnInit(): void {
     // on va récupérer l'id dans l'URL,
@@ -73,6 +75,18 @@ export class AssignmentDetailComponent implements OnInit {
       },
       fragment: 'edition',
     });
+  }
+
+  isLoggedIn() {
+   // var admin = this.authService.isAdmin().then(admin => {return admin})
+    //    return this.authService.isAdmin;
+    let session = localStorage.getItem('user')
+    if(session !== null){
+      let user = <User> JSON.parse(session)
+      return user.isAdmin
+    }
+    return false
+
   }
 
   onSubmit() {

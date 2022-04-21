@@ -33,6 +33,7 @@ export class AuthService {
         resolve(user.isAdmin)
       }
       else{
+        console.log("dans resolve false")
         resolve(false);
       }
     });
