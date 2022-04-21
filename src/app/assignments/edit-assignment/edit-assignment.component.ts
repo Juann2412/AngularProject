@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from 'src/app/shared/assignments.service';
 import { Assignment } from '../assignment.model';
+import { Matiere } from '../matiere.model';
+import { MatieresService } from 'src/app/shared/matieres.service';
 
 @Component({
   selector: 'app-edit-assignment',
@@ -12,11 +14,18 @@ export class EditAssignmentComponent implements OnInit {
   assignment!: Assignment | undefined;
   nomAssignment!: string;
   dateDeRendu!: Date;
+  nomEleve!: string;
+  selectedMatiere : Matiere = new Matiere;
+  matiere: Matiere[] = [];
+  idMatiere !: Number;
+  noteAssignment!: number;
+  remarqueAssignment!: string;
 
   constructor(
     private assignmentsService: AssignmentsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private matiereService: MatieresService
   ) { }
 
   ngOnInit(): void {
@@ -28,6 +37,7 @@ export class EditAssignmentComponent implements OnInit {
     console.log(this.route.snapshot.fragment);
 
     this.getAssignment();
+    this.getMatiere();
   }
 
   getAssignment() {
@@ -40,18 +50,45 @@ export class EditAssignmentComponent implements OnInit {
 
       this.assignment = assignment;
 
+      this.idMatiere = assignment.matiere;
+
       // Pour pré-remplir le formulaire
       this.nomAssignment = assignment.nom;
       this.dateDeRendu = assignment.dateDeRendu;
+      this.nomEleve = assignment.eleve;
+      this.noteAssignment = assignment.note;
+      this.remarqueAssignment = assignment.remarque;
     });
   }
 
+  getMatiere() {
+    
+        this.matiereService.getMatiere().subscribe((matiere) => {
+          if (!matiere) return;
+    
+          this.matiere = matiere;
+
+          for (let mat of this.matiere) {
+            if(mat.id == this.idMatiere)
+              this.selectedMatiere = mat;
+        }
+        });
+      }
+
   onSaveAssignment() {
     if (!this.assignment) return;
+    if ((!this.nomAssignment) || (!this.dateDeRendu)) return;
+    console.log(
+      'nom = ' + this.nomAssignment + ' date de rendu = ' + this.dateDeRendu + ' matiere = ' + this.selectedMatiere.id
+    );
 
     // on récupère les valeurs dans le formulaire
     this.assignment.nom = this.nomAssignment;
+    this.assignment.eleve = this.nomEleve;
     this.assignment.dateDeRendu = this.dateDeRendu;
+    this.assignment.note = this.noteAssignment;
+    this.assignment.remarque = this.remarqueAssignment;
+    this.assignment.matiere = this.selectedMatiere.id;
 
     this.assignmentsService
       .updateAssignment(this.assignment)

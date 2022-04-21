@@ -16,7 +16,7 @@ export class AddAssignmentComponent implements OnInit {
   nomEleve!: string;
   dateDeRendu!: Date;
   matiere: Matiere[] = [];
-  selectedMatiere !: Matiere;
+  selectedMatiere : Matiere = new Matiere;
 
   constructor(private assignmentsService: AssignmentsService,
     private matiereService: MatieresService,
