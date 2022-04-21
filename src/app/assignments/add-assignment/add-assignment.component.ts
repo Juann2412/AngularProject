@@ -4,6 +4,7 @@ import { MatieresService } from 'src/app/shared/matieres.service';
 import { Assignment } from '../assignment.model';
 import { Matiere } from '../matiere.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-assignment',
@@ -20,19 +21,26 @@ export class AddAssignmentComponent implements OnInit {
 
   constructor(private assignmentsService: AssignmentsService,
     private matiereService: MatieresService,
-    private route: ActivatedRoute, private router: Router) { }
+    private route: ActivatedRoute, private router: Router,private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.getMatiere();
+    let token = localStorage.getItem('user')
+    if (token === null) {
+      this.router.navigate(['/login']);
+    }
+    else{
+      this.getMatiere();
+    }
+
   }
 
   getMatiere() {
 
     this.matiereService.getMatiere().subscribe((matiere) => {
       if (!matiere) return;
-
       this.matiere = matiere;
       this.selectedMatiere = matiere[0];
+      console.log(this.selectedMatiere)
     });
   }
 
@@ -56,6 +64,10 @@ export class AddAssignmentComponent implements OnInit {
 
         // il va falloir naviguer (demander au router) d'afficher à nouveau la liste
         // en gros, demander de naviguer vers /home
+        let config = new MatSnackBarConfig();
+        config.duration = 2000;
+        config.verticalPosition = "bottom";
+        this._snackBar.open("Ajout d'assignment avec succès","",config);
         this.router.navigate(["/home"]);
       })
   }

@@ -9,10 +9,18 @@ import { AuthService } from './shared/auth.service';
 })
 export class AppComponent {
   titre = 'Application de gestion des assignments...';
-
+  isVisible = false;
   constructor(private authService:AuthService, private router:Router) {
   }
-
+  ngOnInit(): void {
+    if(localStorage.getItem('token') === null){
+      this.isVisible = false
+    }
+    else{
+      this.isVisible = true
+    }
+  }
+  /*
   onLoginLogout() {
     if(this.authService.loggedIn) {
       console.log("je me deloggue");
@@ -23,6 +31,11 @@ export class AppComponent {
       console.log("je me loggue");
       this.authService.logIn("Juann", "monpassword");
     }
+  }
+*/
+  logout(){
+    this.authService.logOut();
+     this.router.navigate(["/login"],{replaceUrl:true})
   }
 
   isLogged() {

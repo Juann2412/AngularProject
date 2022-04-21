@@ -20,6 +20,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatStepperModule} from '@angular/material/stepper';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 import { AssignmentsComponent } from './assignments/assignments.component';
@@ -34,6 +35,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
 import { AuthGuard } from './shared/auth.guard';
+import { LoginComponent } from './login/login.component';
 
 const routes:Routes = [
   {
@@ -54,7 +56,12 @@ const routes:Routes = [
   },
   {
     path:"assignment/:id/edit",
-    component: EditAssignmentComponent
+    component: EditAssignmentComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:"login",
+    component: LoginComponent
   }
 ]
 @NgModule({
@@ -65,11 +72,12 @@ const routes:Routes = [
     NonRenduDirective,
     AssignmentDetailComponent,
     AddAssignmentComponent,
-    EditAssignmentComponent
+    EditAssignmentComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule, FormsModule,MatTabsModule,MatToolbarModule,MatTooltipModule,
-    MatStepperModule,ReactiveFormsModule,ScrollingModule,
+    MatStepperModule,ReactiveFormsModule,ScrollingModule,MatSnackBarModule,
     BrowserAnimationsModule, MatButtonModule, MatIconModule, MatDividerModule,
     MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule,
     MatListModule, MatCardModule, MatCheckboxModule,MatSlideToggleModule,

@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary"  >
   <span>Assignment app</span>
   <span class="example-spacer"></span>
   <a routerLink="/add" class="ajouterBtn">
@@ -10,8 +10,16 @@
     <mat-icon>add</mat-icon>
   </button>
   </a>
+  <button (click)="logout()" mat-icon-button style="margin: 5px;"
+        class="example-icon favorite-icon danger"
+        aria-label="Example icon-button with heart icon"
+        mat-raised-button
+        color="warn"
+        matTooltip="Déconnexion">
+        <mat-icon>logout</mat-icon>
+  </button>
 </mat-toolbar>
-
+<!--
 <div class="container">
   <h1>
     <nav>
@@ -20,5 +28,5 @@
   </h1>
   <mat-slide-toggle (click)="onLoginLogout()">Login</mat-slide-toggle>
 </div>
-
+-->
 <router-outlet></router-outlet>

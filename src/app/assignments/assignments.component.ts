@@ -125,8 +125,13 @@ export class AssignmentsComponent implements OnInit {
     console.log("Dans ngOnInit, appelé avant l'affichage")
     // demander les données au service de gestion des assignments...
     //this.assignmentsService.peuplerBD();
-    this.getAssignments();
-
+    console.log('verification si deja connecté');
+    let token = localStorage.getItem('user')
+    if (token === null) {
+      this.router.navigate(['/login']);
+    } else {
+      this.getAssignments();
+    }
     console.log("Après l'appel au service");
 
   }
@@ -238,5 +243,4 @@ export class AssignmentsComponent implements OnInit {
   details(assignment : Assignment){
     this.router.navigate(['/assignment/'+assignment.id]);
   }
-
 }
