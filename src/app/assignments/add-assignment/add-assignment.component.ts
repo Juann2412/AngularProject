@@ -14,9 +14,9 @@ export class AddAssignmentComponent implements OnInit {
   // Champ de formulaire
   nomAssignment!: string;
   nomEleve!: string;
-  idMatiere!: number;
   dateDeRendu!: Date;
   matiere: Matiere[] = [];
+  selectedMatiere !: Matiere;
 
   constructor(private assignmentsService: AssignmentsService,
     private matiereService: MatieresService,
@@ -32,13 +32,14 @@ export class AddAssignmentComponent implements OnInit {
       if (!matiere) return;
 
       this.matiere = matiere;
+      this.selectedMatiere = matiere[0];
     });
   }
 
   onSubmit() {
     if ((!this.nomAssignment) || (!this.dateDeRendu)) return;
     console.log(
-      'nom = ' + this.nomAssignment + ' date de rendu = ' + this.dateDeRendu + ' matiere = ' + this.idMatiere
+      'nom = ' + this.nomAssignment + ' date de rendu = ' + this.dateDeRendu + ' matiere = ' + this.selectedMatiere.id
     );
 
     let newAssignment = new Assignment();
@@ -47,7 +48,7 @@ export class AddAssignmentComponent implements OnInit {
     newAssignment.eleve = this.nomEleve;
     newAssignment.dateDeRendu = this.dateDeRendu;
     newAssignment.rendu = false;
-    newAssignment.matiere = this.idMatiere;
+    newAssignment.matiere = this.selectedMatiere.id;
 
     this.assignmentsService.addAssignment(newAssignment)
       .subscribe(reponse => {

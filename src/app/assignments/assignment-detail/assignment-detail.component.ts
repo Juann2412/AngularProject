@@ -77,7 +77,7 @@ export class AssignmentDetailComponent implements OnInit {
       this.assignmentTransmis.rendu = true;
       this.assignmentTransmis.note = this.noteAssignment;
       if(this.remarqueAssignment)
-      this.assignmentTransmis.remarque = this.remarqueAssignment;
+        this.assignmentTransmis.remarque = this.remarqueAssignment;
 
       
       this.assignmentsService
