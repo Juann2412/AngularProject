@@ -7,7 +7,8 @@ import { User } from '../login/user.model';
 })
 export class AuthService {
   loggedIn = false;
-  url = "http://localhost:8010/api";
+  url = "https://mbdsprojectbackapikj.herokuapp.com/api"
+  //url = "http://localhost:8010/api";
   logIn(login:string, password:string) {
     // normalement il faudrait envoyer une requête sur un web service, passer le login et le password
     // et recevoir un token d'authentification, etc. etc.

@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Assignment } from '../assignments/assignment.model';
-import { LoggingService } from './logging.service';
-import {data} from './data';
+import { LoggingService } from '../Shared/logging.service';
+import {data} from '../Shared/data';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,8 @@ export class AssignmentsService {
   }
 
 
-  url = "http://localhost:8010/api/assignments";
-
+  //url = "http://localhost:8010/api/assignments";
+url = "https://mbdsprojectbackapikj.herokuapp.com/api/assignments"
   getAssignments(page:number, limit:number): Observable<any> {
     // en réalité, bientôt au lieu de renvoyer un tableau codé en dur,
     // on va envoyer une requête à un Web Service sur le cloud, qui mettra un

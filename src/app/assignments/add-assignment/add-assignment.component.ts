@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AssignmentsService } from 'src/app/shared/assignments.service';
-import { MatieresService } from 'src/app/shared/matieres.service';
+import { AssignmentsService } from 'src/app/Shared/assignments.service';
+import { MatieresService } from '../../Shared/matieres.service';
 import { Assignment } from '../assignment.model';
 import { Matiere } from '../matiere.model';
 import { ActivatedRoute, Router } from '@angular/router';

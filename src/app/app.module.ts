@@ -24,8 +24,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 import { AssignmentsComponent } from './assignments/assignments.component';
-import { RenduDirective } from './shared/rendu.directive';
-import { NonRenduDirective } from './shared/non-rendu.directive';
+import { RenduDirective } from '../app/Shared/rendu.directive';
+import { NonRenduDirective } from '../app/Shared/non-rendu.directive';
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { AssignmentDetailComponent } from './assignments/assignment-detail/assignment-detail.component';
 import { AddAssignmentComponent } from './assignments/add-assignment/add-assignment.component';
@@ -34,7 +34,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HttpClientModule } from '@angular/common/http';
 import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
-import { AuthGuard } from './shared/auth.guard';
+import { AuthGuard } from './Shared/auth.guard';
 import { LoginComponent } from './login/login.component';
 
 const routes:Routes = [

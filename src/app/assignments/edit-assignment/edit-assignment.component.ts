@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AssignmentsService } from 'src/app/shared/assignments.service';
+import { AssignmentsService } from 'src/app/Shared/assignments.service';
 import { Assignment } from '../assignment.model';
 import { Matiere } from '../matiere.model';
-import { MatieresService } from 'src/app/shared/matieres.service';
+import { MatieresService } from 'src/app/Shared/matieres.service';
 
 @Component({
   selector: 'app-edit-assignment',
@@ -62,10 +62,10 @@ export class EditAssignmentComponent implements OnInit {
   }
 
   getMatiere() {
-    
+
         this.matiereService.getMatiere().subscribe((matiere) => {
           if (!matiere) return;
-    
+
           this.matiere = matiere;
 
           for (let mat of this.matiere) {

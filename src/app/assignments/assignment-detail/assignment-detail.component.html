@@ -21,8 +21,6 @@
       <input matInput [min]="1" [max]="20" placeholder="Note" type="number" min="1" max="20" [(ngModel)]="noteAssignment" name="note" required>
     </mat-form-field>
 
-
-
     <mat-form-field style="width: 600px;" class="example-full-width" *ngIf="!assignmentTransmis.rendu">
       <mat-label>Remarques</mat-label>
       <textarea matInput placeholder="..." type="text" [(ngModel)]="remarqueAssignment" name="remarque" ></textarea>
