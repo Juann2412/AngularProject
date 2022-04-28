@@ -26,7 +26,7 @@ export class AuthService {
     let user = new User();
     user.email = login
     user.password = password;
-    return this.http.post<any>("http://localhost:8010/api/register",user);
+    return this.http.post<any>(this.url+"/register",user);
   }
 
   logOut() {
