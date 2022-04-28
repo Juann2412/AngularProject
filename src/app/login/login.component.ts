@@ -23,8 +23,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
-
-    return
     this.auth.logIn(this.email,this.password)
      .subscribe(response => {
        console.log(response)
