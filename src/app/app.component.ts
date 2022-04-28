@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from './login/user.model';
 import { AuthService } from './Shared/auth.service';
 
 @Component({
@@ -9,16 +10,11 @@ import { AuthService } from './Shared/auth.service';
 })
 export class AppComponent {
   titre = 'Application de gestion des assignments...';
-  isVisible = false;
+   user !: User;
   constructor(private authService:AuthService, private router:Router) {
   }
   ngOnInit(): void {
-    if(localStorage.getItem('token') === null){
-      this.isVisible = false
-    }
-    else{
-      this.isVisible = true
-    }
+    console.log("dans app")
   }
   /*
   onLoginLogout() {
@@ -39,6 +35,8 @@ export class AppComponent {
   }
 
   isLogged() {
+    console.log("dans islogged:"+this.authService.loggedIn)
     return this.authService.loggedIn;
   }
+
 }

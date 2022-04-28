@@ -36,6 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
 import { AuthGuard } from './Shared/auth.guard';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes:Routes = [
   {
@@ -62,6 +63,10 @@ const routes:Routes = [
   {
     path:"login",
     component: LoginComponent
+  },
+  {
+    path:"register",
+    component: RegisterComponent
   }
 ]
 @NgModule({
@@ -73,7 +78,8 @@ const routes:Routes = [
     AssignmentDetailComponent,
     AddAssignmentComponent,
     EditAssignmentComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule, FormsModule,MatTabsModule,MatToolbarModule,MatTooltipModule,

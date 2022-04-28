@@ -1,5 +1,10 @@
-<mat-toolbar color="primary"  >
-  <span>Assignment app</span>
+<mat-toolbar color="primary" *ngIf="isLogged()" >
+  <h1>
+    <nav>
+      <a routerLink="/home">Assignment app</a>
+    </nav>
+  </h1>
+
   <span class="example-spacer"></span>
   <a routerLink="/add" class="ajouterBtn">
   <button mat-icon-button
