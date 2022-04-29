@@ -6,46 +6,106 @@
             <img mat-card-avatar src="{{selectedMatiere.photoMatiere}}" alt="Shiba Inu" width="100" height="90">
         </mat-card-content>
 
-        <mat-form-field appearance="fill">
-            <mat-label>Choix de la matiere</mat-label>
-            <mat-select [(value)]="selectedMatiere">
-                <mat-option [value]="matier" *ngFor="let matier of matiere">{{matier.nom}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+        <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+            <mat-step [stepControl]="firstFormGroup">
+                <form [formGroup]="firstFormGroup">
+                    <ng-template matStepLabel>Edition de la matiere</ng-template>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Choix de la matiere</mat-label>
+                        <mat-select [(value)]="selectedMatiere">
+                            <mat-option [value]="matier" *ngFor="let matier of matiere">{{matier.nom}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div>
+                        <button mat-button matStepperNext>Suivant</button>
+                    </div>
+                    <mat-card-content style="margin-top: 20px;">
+                        <img mat-card-avatar src="{{selectedMatiere.photoProf}}" alt="Shiba Inu" width="100" height="90">
+                        <mat-card-title style="margin-top: 10px;margin-left:20px;">{{selectedMatiere.prof}}</mat-card-title>
+                    </mat-card-content>
+                </form>
+            </mat-step>
 
-        <mat-card-content style="margin-top: 20px;">
-            <img mat-card-avatar src="{{selectedMatiere.photoProf}}" alt="Shiba Inu" width="100" height="90">
-            <mat-card-title style="margin-top: 10px;margin-left:20px;">{{selectedMatiere.prof}}</mat-card-title>
-        </mat-card-content>
+            <mat-step [stepControl]="secondFormGroup">
+                <form [formGroup]="secondFormGroup">
+                    <ng-template matStepLabel>Edition de l'assignment</ng-template>
+                    <mat-form-field>
+                        <input matInput placeholder="Edition du nom" formControlName="assignmentCtrl" name="assignment-name" required>
+                    </mat-form-field>
+                    <div>
+                        <button mat-button matStepperPrevious>Precedent</button>
+                        <button mat-button matStepperNext>Suivant</button>
+                    </div>
+                </form>
+            </mat-step>
 
-        <mat-form-field>
-            <input matInput placeholder="Edition du nom" [(ngModel)]="nomAssignment" name="assignment-name"required>
-        </mat-form-field>
+            <mat-step [stepControl]="thirdFormGroup">
+                <form [formGroup]="thirdFormGroup">
+                    <ng-template matStepLabel>Edition de l'eleve</ng-template>
+                    <mat-form-field>
+                        <input matInput placeholder="Nom de l'eleve" formControlName="eleveCtrl" name="nomeleve" required>
+                    </mat-form-field>
+                    <div>
+                        <button mat-button matStepperPrevious>Precedent</button>
+                        <button mat-button matStepperNext>Suivant</button>
+                    </div>
+                </form>
+            </mat-step>
 
-        <mat-form-field>
-            <input matInput placeholder="Nom de l'eleve" [(ngModel)]="nomEleve" name="nomeleve" required>
-        </mat-form-field>
+            <mat-step [stepControl]="fourthFormGroup">
+                <form [formGroup]="fourthFormGroup">
+                    <ng-template matStepLabel>Edition de la date de rendu</ng-template>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Choisissez une date</mat-label>
+                        <input matInput [matDatepicker]="picker" placeholder="Edition de la date" formControlName="dateCtrl" name="date" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <div>
+                        <button mat-button matStepperPrevious>Precedent</button>
+                        <button mat-button matStepperNext>Suivant</button>
+                    </div>
+                </form>
+            </mat-step>
 
-        <mat-form-field>
-            <input matInput [matDatepicker]="picker" placeholder="Edition de la date" [(ngModel)]="dateDeRendu" name="date"required>
-            <mat-datepicker-toggle matSuffix [for]="picker">
-            </mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+                <mat-step [stepControl]="fifthFormGroup">
+                    <form [formGroup]="fifthFormGroup">
+                        <ng-template matStepLabel>Edition de la note</ng-template>
+                        <mat-form-field>
+                            <input matInput [min]="1" [max]="20" placeholder="Note" type="number" min="1" max="20" formControlName="noteCtrl" name="note">
+                        </mat-form-field>
+                        <div>
+                            <button mat-button matStepperPrevious>Precedent</button>
+                            <button mat-button matStepperNext>Suivant</button>
+                        </div>
+                    </form>
+                </mat-step>
 
-        <mat-form-field>
-            <input matInput [min]="1" [max]="20" placeholder="Note" type="number" min="1" max="20" [(ngModel)]="noteAssignment" name="note"
-                >
-        </mat-form-field>
+                <mat-step [stepControl]="sixthFormGroup">
+                    <form [formGroup]="sixthFormGroup">
+                        <ng-template matStepLabel>Edition de la remarque</ng-template>
+                        <mat-form-field>
+                            <textarea matInput placeholder="..." type="text" formControlName="remarqueCtrl" name="remarque"></textarea>
+                        </mat-form-field>
+                        <div>
+                            <button mat-button matStepperPrevious>Precedent</button>
+                            <button mat-button matStepperNext>Suivant</button>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step>
+
+                    <ng-template matStepLabel>Terminer</ng-template>
+                    <p>Tous les champs sont remplies.</p>
+                    <div>
+                        <button mat-button matStepperPrevious>Precedent</button>
+                        <!--<button mat-button (click)="stepper.reset()">Re-actualiser</button>-->
+                    </div>
+                </mat-step>
+        </mat-stepper>
 
 
-
-        <mat-form-field style="width: 600px;" class="example-full-width">
-            <mat-label>Remarques</mat-label>
-            <textarea matInput placeholder="..." type="text" [(ngModel)]="remarqueAssignment" name="remarque"></textarea>
-        </mat-form-field>
-
-        <button mat-raised-button color="primary" [disabled]="((!nomAssignment)||(!dateDeRendu))">
+        <button mat-raised-button color="primary" [disabled]="((!this.secondFormGroup.controls['assignmentCtrl'].value) || (!this.thirdFormGroup.controls['eleveCtrl'].value) || (!this.fourthFormGroup.controls['dateCtrl'].value))">
             Modifier
           </button>
     </form>
