@@ -22,8 +22,11 @@ export class AuthService {
     return this.http.post<any>(this.url+"/login",user);
   }
 
-  verifyToken(){
-    return this.http.get<any>(this.url+"/validate");
+  verifyToken(token : string){
+    console.log("dans service:"+ token)
+    let user = new User()
+    user.token = token
+    return this.http.post<any>("http://localhost:8010/api/validate",user);
   }
 
   register(login:string, password:string){

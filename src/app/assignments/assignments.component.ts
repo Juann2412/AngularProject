@@ -6,6 +6,8 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { filter, map, pairwise, tap, throttleTime } from 'rxjs';
 import { User } from '../login/user.model';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { AuthService } from '../Shared/auth.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-assignments',
@@ -39,7 +41,7 @@ export class AssignmentsComponent implements OnInit {
 
   indexTabs = 0;
 
-  constructor(private assignmentsService:AssignmentsService,private router: Router, private ngZone2: NgZone, private ngZone: NgZone) {}
+  constructor(private assignmentsService:AssignmentsService,private router: Router, private ngZone2: NgZone, private ngZone: NgZone,private auth : AuthService ) {}
   @ViewChild('scroller') scroller!: CdkVirtualScrollViewport;
   @ViewChild('scrollerNonRendu') scrollerNonRendu!: CdkVirtualScrollViewport;
   ngAfterViewInit():void{
@@ -133,9 +135,24 @@ export class AssignmentsComponent implements OnInit {
     if (token === null) {
       this.router.navigate(['/login']);
     } else {
-//      this.getAssignments();
-      this.getAssignments();
-      this.getAssignments2()
+      let myToken = <User>JSON.parse(token)
+      console.log(myToken.token)
+      this.auth.verifyToken(myToken.token)
+      .subscribe(
+        (response) => {
+          this.getAssignments();
+          this.getAssignments2()
+        },
+        (error) =>{
+          if(error){
+            localStorage.removeItem('user')
+            this.auth.loggedIn = false
+            this.router.navigate(['/login'])
+          }
+        }
+      )
+
+
     }
     console.log("Après l'appel au service");
 
