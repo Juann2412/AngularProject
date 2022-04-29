@@ -7,14 +7,17 @@
     <mat-card-content>
       <form ngForm #loginForm (submit)="onSubmit(); loginForm.reset()"   class="form">
         <mat-form-field>
-          <input matInput placeholder="email"  [(ngModel)]="email"  name="email"   required>
+          <input matInput placeholder="email"  [(ngModel)]="email"  name="email"   required  >
         </mat-form-field>
+        <mat-label *ngIf="errorEmail" style="color: red;">Le champ email est obligatoire</mat-label>
 
         <mat-form-field>
-          <input matInput placeholder="password" type="password" [(ngModel)]="password"  name="password" required>
-
+          <input matInput placeholder="password" type="password" [(ngModel)]="password"  name="password"   required>
         </mat-form-field>
-        <button mat-flat-button color="primary">
+        <mat-label *ngIf="errorPassword" style="color: red;">Le champ password est obligatoire</mat-label>
+
+        <mat-label *ngIf="error" style="color: red;">Mot de passe ou email incorrect</mat-label>
+        <button mat-flat-button color="primary" style="margin-top: 10px;">
           Connexion
         </button>
       </form>

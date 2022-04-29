@@ -22,6 +22,10 @@ export class AuthService {
     return this.http.post<any>(this.url+"/login",user);
   }
 
+  verifyToken(){
+    return this.http.get<any>(this.url+"/validate");
+  }
+
   register(login:string, password:string){
     let user = new User();
     user.email = login

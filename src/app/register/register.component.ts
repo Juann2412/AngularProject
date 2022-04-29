@@ -12,31 +12,50 @@ export class RegisterComponent implements OnInit {
   email!: string;
   password !: string;
   confirmpassword !: string;
-
+  errorEmail: boolean =false
+  errorPassword: boolean =false
+  errorConfirmPassword: boolean =false
+  errorEqualsPassword: boolean =false
   constructor( private router:Router,private auth : AuthService) { }
 
   ngOnInit(): void {
   }
 
+  validateForm(){
+    !this.email || this.email==undefined ? this.errorEmail= true : this.errorEmail= false
+    !this.password || this.password == undefined ? this.errorPassword= true : this.errorPassword= false
+    !this.confirmpassword || this.confirmpassword == undefined ? this.errorConfirmPassword= true : this.errorConfirmPassword= false
+    this.password != this.confirmpassword ?this.errorEqualsPassword = true : this.errorConfirmPassword = false
+    if(this.errorEmail || this.errorPassword || this.confirmpassword)
+      return true
+   else
+       return false
+
+ }
+
   onSubmit(){
-    this.auth.register(this.email,this.password)
-    .subscribe(response => {
-      console.log(response)
-     if(response.auth === true && response.token !== null){
-       let connectedUser = new User()
-       connectedUser.token = response.token
-       connectedUser.isAdmin = response.user.isAdmin
-       localStorage.setItem('user',JSON.stringify(connectedUser))
-       //this.app.isVisible = true
-       this.auth.loggedIn = true
-       console.log("dans oui")
-       console.log(JSON.stringify(connectedUser))
-       this.router.navigate(["/"])
-     }
-     else{
-       this.auth.loggedIn = false
-       console.log(response)
-     }
-   })
+    if(this.validateForm()) return
+    else{
+      this.auth.register(this.email,this.password)
+      .subscribe(response => {
+        console.log(response)
+       if(response.auth === true && response.token !== null){
+         let connectedUser = new User()
+         connectedUser.token = response.token
+         connectedUser.isAdmin = response.user.isAdmin
+         localStorage.setItem('user',JSON.stringify(connectedUser))
+         //this.app.isVisible = true
+         this.auth.loggedIn = true
+         console.log("dans oui")
+         console.log(JSON.stringify(connectedUser))
+         this.router.navigate(["/"])
+       }
+       else{
+         this.auth.loggedIn = false
+         console.log(response)
+       }
+     })
+    }
+
   }
 }

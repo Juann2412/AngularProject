@@ -4,6 +4,7 @@ import { AssignmentsService } from '../Shared/assignments.service';
 import { Assignment } from './assignment.model';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { filter, map, pairwise, tap, throttleTime } from 'rxjs';
+import { User } from '../login/user.model';
 
 @Component({
   selector: 'app-assignments',

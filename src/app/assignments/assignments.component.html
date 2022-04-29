@@ -92,16 +92,27 @@
   </div>
 
   <mat-tab-group animationDuration="0ms">
-    <mat-tab label="Rendu" >
+    <mat-tab label="Rendu">
       <cdk-virtual-scroll-viewport itemSize="150" class="example-viewport" #scroller>
         <mat-list *cdkVirtualFor="let assignment of assignments" class="example-item">
-          <mat-card class="my-card" (click) = "details(assignment)">
-            <mat-card-header>
+          <mat-card class="example-card my-card" (click) = "details(assignment)">
+            <mat-card-title-group>
+              <mat-card-title>
+                <img mat-card-avatar src="{{assignment.matieres.photoProf}}"  alt="Shiba Inu">
+                {{assignment.nom}}
+                <img mat-card-sm-image class="imgs "   src="{{assignment.matieres.photoMatiere}}" >
+              </mat-card-title>
+
+            </mat-card-title-group>
+
+            <!-- <mat-card-header>
+
               <mat-card-title style="margin-top: 10px;">{{assignment.nom}}</mat-card-title>
               <img mat-card-avatar src="{{assignment.matieres.photoProf}}" alt="Shiba Inu">
-            </mat-card-header>
+            </mat-card-header> -->
             <mat-card-content style="margin-top: 20px;">
-              <h4>Devoir de {{assignment.eleve}}</h4>
+
+              <h4>Devoir de {{assignment.eleve}} </h4>
               <h4>A rendre le {{assignment.dateDeRendu | date:"dd/MM/yy"}}</h4>
             </mat-card-content>
           </mat-card>
@@ -112,10 +123,14 @@
       <cdk-virtual-scroll-viewport itemSize="100" class="example-viewport" #scrollerNonRendu>
         <mat-list *cdkVirtualFor="let assignment of assignmentsNonRendu" class="example-item">
           <mat-card class="my-card" (click) = "details(assignment)">
-            <mat-card-header>
-              <mat-card-title style="margin-top: 10px;">{{assignment.nom}}</mat-card-title>
-              <img mat-card-avatar src="{{assignment.matieres.photoProf}}" alt="Shiba Inu">
-            </mat-card-header>
+            <mat-card-title-group>
+              <mat-card-title>
+                <img mat-card-avatar src="{{assignment.matieres.photoProf}}"  alt="Shiba Inu">
+                {{assignment.nom}}
+                <img mat-card-sm-image class="imgs "   src="{{assignment.matieres.photoMatiere}}" >
+              </mat-card-title>
+
+            </mat-card-title-group>
             <mat-card-content style="margin-top: 20px;">
               <h4>Devoir de {{assignment.eleve}}</h4>
               <h4>A rendre le {{assignment.dateDeRendu | date:"dd/MM/yy"}}</h4>

@@ -8,12 +8,20 @@
         <mat-form-field>
           <input matInput placeholder="email" [(ngModel)]="email"  name="email"   required>
         </mat-form-field>
+        <mat-label *ngIf="errorEmail" style="color: red;">Le champ email est obligatoire</mat-label>
+
         <mat-form-field>
           <input matInput placeholder="password" type="password" [(ngModel)]="password" name="password" required>
         </mat-form-field>
+        <mat-label *ngIf="errorPassword" style="color: red;">Le champ password est obligatoire</mat-label>
+
         <mat-form-field>
           <input matInput placeholder="confirm password" type="password" [(ngModel)]="confirmpassword"  name="confirmpassword" required>
         </mat-form-field>
+        <mat-label *ngIf="errorConfirmPassword" style="color: red;">Le champ confirm password est obligatoire</mat-label>
+
+
+        <mat-label *ngIf="errorEqualsPassword" style="color: red;">Les mots de passe ne sont pas identiques</mat-label>
         <button mat-flat-button color="primary">
           S'inscrire
         </button>

@@ -32,7 +32,7 @@ import { AddAssignmentComponent } from './assignments/add-assignment/add-assignm
 
 import { Routes, RouterModule } from '@angular/router';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule , HTTP_INTERCEPTORS} from '@angular/common/http';
 import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
 import { AuthGuard } from './Shared/auth.guard';
 import { LoginComponent } from './login/login.component';
