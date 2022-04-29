@@ -5,6 +5,7 @@ import { Assignment } from './assignment.model';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { filter, map, pairwise, tap, throttleTime } from 'rxjs';
 import { User } from '../login/user.model';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-assignments',
@@ -36,6 +37,7 @@ export class AssignmentsComponent implements OnInit {
   prevPageNonRendu= 1;
   nextPageNonRendu= 2;
 
+  indexTabs = 0;
 
   constructor(private assignmentsService:AssignmentsService,private router: Router, private ngZone2: NgZone, private ngZone: NgZone) {}
   @ViewChild('scroller') scroller!: CdkVirtualScrollViewport;
@@ -241,7 +243,17 @@ export class AssignmentsComponent implements OnInit {
     this.getAssignments();
   }
 
+
+
+
+
   details(assignment : Assignment){
     this.router.navigate(['/assignment/'+assignment.id]);
   }
+
+
+
+  tabEvent = (tabChangeEvent: MatTabChangeEvent): void => {
+     this.indexTabs = tabChangeEvent.index;
+}
 }

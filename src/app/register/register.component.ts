@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { User } from '../login/user.model';
 import { AuthService } from '../Shared/auth.service';
@@ -16,7 +17,7 @@ export class RegisterComponent implements OnInit {
   errorPassword: boolean =false
   errorConfirmPassword: boolean =false
   errorEqualsPassword: boolean =false
-  constructor( private router:Router,private auth : AuthService) { }
+  constructor( private router:Router,private auth : AuthService,private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -48,6 +49,10 @@ export class RegisterComponent implements OnInit {
          this.auth.loggedIn = true
          console.log("dans oui")
          console.log(JSON.stringify(connectedUser))
+         let config = new MatSnackBarConfig();
+        config.duration = 2000;
+        config.verticalPosition = "bottom";
+        this._snackBar.open("Félicitation,inscription a été effectué avec succès","",config);
          this.router.navigate(["/"])
        }
        else{
