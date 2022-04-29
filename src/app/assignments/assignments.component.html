@@ -74,6 +74,44 @@
   </mat-tab-group>
   -->
 
+  <div class="barrePagination" *ngIf="indexTabs ===0">
+
+    <p>Page courante : {{page}}, assignments visibles : {{pagingCounter}} - {{pagingCounter + limit-1}}, nbPages total {{totalPages}}</p>
+    <p>Nb assignments par page : <input type="range" min=5 max=100 [(ngModel)]="limit" (change)="getAssignments()">
+      {{limit}}
+    </p>
+
+    <button mat-flat-button color="primary" [disabled]="!hasPrevPage" (click)="premierePage()">Première page</button>
+    &nbsp;
+    <button mat-flat-button color="primary"
+            (click)="pagePrecedente()"
+            [disabled]="!hasPrevPage"
+    >Page précédente</button>
+    &nbsp;
+    <button mat-flat-button color="primary" (click)="pageSuivante()" [disabled]="!hasNextPage">Page suivante</button>
+    &nbsp;
+    <button mat-flat-button color="primary" (click)="dernierePage()" [disabled]="!hasNextPage">Dernière page</button>
+  </div>
+
+  <div class="barrePagination" *ngIf="indexTabs ===1">
+
+    <p>Page courante : {{pageNonRendu}}, assignments visibles : {{pagingCounterNonRendu}} - {{pagingCounterNonRendu + limitNonRendu-1}}, nbPages total {{totalPagesNonRendu}}</p>
+    <p>Nb assignments par page : <input type="range" min=5 max=100 [(ngModel)]="limitNonRendu" (change)="getAssignments2()">
+      {{limit}}
+    </p>
+
+    <button mat-flat-button color="primary" [disabled]="!hasPrevPageNonRendu" (click)="premierePageNR()">Première page</button>
+    &nbsp;
+    <button mat-flat-button color="primary"
+            (click)="pagePrecedenteNR()"
+            [disabled]="!hasPrevPageNonRendu"
+    >Page précédente</button>
+    &nbsp;
+    <button mat-flat-button color="primary" (click)="pageSuivanteNR()" [disabled]="!hasNextPageNonRendu">Page suivante</button>
+    &nbsp;
+    <button mat-flat-button color="primary" (click)="dernierePageNR()" [disabled]="!hasNextPageNonRendu">Dernière page</button>
+  </div>
+
   <mat-tab-group animationDuration="0ms" (selectedTabChange)="tabEvent($event)">
     <mat-tab label="Rendu">
       <cdk-virtual-scroll-viewport itemSize="150" class="example-viewport" #scroller>

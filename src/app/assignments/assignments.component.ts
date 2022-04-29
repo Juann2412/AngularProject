@@ -133,7 +133,9 @@ export class AssignmentsComponent implements OnInit {
     if (token === null) {
       this.router.navigate(['/login']);
     } else {
+//      this.getAssignments();
       this.getAssignments();
+      this.getAssignments2()
     }
     console.log("Après l'appel au service");
 
@@ -159,8 +161,9 @@ export class AssignmentsComponent implements OnInit {
         this.prevPage= reponse.prevPage;
         this.nextPage= reponse.nextPage;
     });
-
-    this.assignmentsService.getAssignmentsNonRendu(this.page, this.limit)
+  }
+  getAssignments2(){
+    this.assignmentsService.getAssignmentsNonRendu(this.pageNonRendu, this.limitNonRendu)
     .subscribe(reponse => {
       console.log("données arrivées");
       /*this.assignments = assignments;
@@ -180,6 +183,7 @@ export class AssignmentsComponent implements OnInit {
         this.nextPageNonRendu= reponse.nextPage;
     });
   }
+
 
   getAssignmentsScrollInfini() {
     // demander les données au service de gestion des assignments...
@@ -251,6 +255,27 @@ export class AssignmentsComponent implements OnInit {
     this.router.navigate(['/assignment/'+assignment.id]);
   }
 
+
+
+  pagePrecedenteNR() {
+    this.pageNonRendu--;
+    this.getAssignments2();
+  }
+
+  pageSuivanteNR() {
+    this.pageNonRendu++;
+    this.getAssignments2();
+  }
+
+  premierePageNR() {
+    this.pageNonRendu = 1;
+    this.getAssignments2();
+  }
+
+  dernierePageNR() {
+    this.pageNonRendu = this.totalPagesNonRendu;
+    this.getAssignments2();
+  }
 
 
   tabEvent = (tabChangeEvent: MatTabChangeEvent): void => {
