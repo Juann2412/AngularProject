@@ -5,6 +5,7 @@ import { Assignment } from '../assignment.model';
 import { Matiere } from '../matiere.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-add-assignment',
@@ -18,10 +19,17 @@ export class AddAssignmentComponent implements OnInit {
   dateDeRendu!: Date;
   matiere: Matiere[] = [];
   selectedMatiere : Matiere = new Matiere;
+  firstFormGroup !: FormGroup;
+  secondFormGroup !: FormGroup;
+  thirdFormGroup !: FormGroup;
+  fourthFormGroup !: FormGroup;
+  isLinear = false;
+  
 
   constructor(private assignmentsService: AssignmentsService,
     private matiereService: MatieresService,
-    private route: ActivatedRoute, private router: Router,private _snackBar: MatSnackBar) { }
+    private route: ActivatedRoute, private router: Router,private _snackBar: MatSnackBar,
+    private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     let token = localStorage.getItem('user')
@@ -30,6 +38,19 @@ export class AddAssignmentComponent implements OnInit {
     }
     else{
       this.getMatiere();
+
+      this.firstFormGroup = this._formBuilder.group({
+        firstCtrl: ['', Validators.required],
+      });
+      this.secondFormGroup = this._formBuilder.group({
+        assignmentCtrl: ['', Validators.required],
+      });  
+      this.thirdFormGroup = this._formBuilder.group({
+        eleveCtrl: ['', Validators.required],
+      });
+      this.fourthFormGroup = this._formBuilder.group({
+        dateCtrl: ['', Validators.required],
+      }); 
     }
 
   }
@@ -45,16 +66,18 @@ export class AddAssignmentComponent implements OnInit {
   }
 
   onSubmit() {
-    if ((!this.nomAssignment) || (!this.dateDeRendu)) return;
+    if ((!this.secondFormGroup.controls['assignmentCtrl'].value) || (!this.thirdFormGroup.controls['eleveCtrl'].value) || (!this.fourthFormGroup.controls['dateCtrl'].value)) return;
     console.log(
-      'nom = ' + this.nomAssignment + ' date de rendu = ' + this.dateDeRendu + ' matiere = ' + this.selectedMatiere.id
+      //'nom = ' + this.nomAssignment + ' date de rendu = ' + this.dateDeRendu + ' matiere = ' + this.selectedMatiere.id
+      '1 = ' + this.selectedMatiere.id + ' 2 = ' + this.secondFormGroup.controls['assignmentCtrl'].value
     );
 
+    
     let newAssignment = new Assignment();
     newAssignment.id = Math.round(Math.random() * 10000000);
-    newAssignment.nom = this.nomAssignment;
-    newAssignment.eleve = this.nomEleve;
-    newAssignment.dateDeRendu = this.dateDeRendu;
+    newAssignment.nom = this.secondFormGroup.controls['assignmentCtrl'].value;
+    newAssignment.eleve = this.thirdFormGroup.controls['eleveCtrl'].value;
+    newAssignment.dateDeRendu = this.fourthFormGroup.controls['dateCtrl'].value;
     newAssignment.rendu = false;
     newAssignment.matiere = this.selectedMatiere.id;
 
@@ -71,4 +94,5 @@ export class AddAssignmentComponent implements OnInit {
         this.router.navigate(["/home"]);
       })
   }
+  
 }
